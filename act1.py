@@ -159,17 +159,147 @@ while exit==False:
             opc=int(opc)
             if opc==1:
                 # sergio
-                print("Menu 031 (Select character to Edit)").center(40, "=")
-
+                print("Menu 031 (Select character to Edit)".center(40, "="))
+                for clave in dict_characters:
+                    if len(dict_characters[clave]['weapons']) == 1:
+                        print(f"ID: {clave}, Name: {dict_characters[clave]['name']}, Weapons: {dict_weapons[dict_characters[clave]['weapons'][0]]['name']}"
+                            f", Strenght: {dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}"
+                            f", Speed: {dict_characters[clave]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed']}"
+                            f", Experience: {dict_characters[clave]['experience']}")
+                    else:
+                        print(f"ID: {clave}, Name: {dict_characters[clave]['name']}, Weapons: {dict_weapons[dict_characters[clave]['weapons'][0]]['name']}, {dict_weapons[dict_characters[clave]['weapons'][1]]['name']}"
+                            f", Strenght: {dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}"
+                            f", Speed: {dict_characters[clave]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed']}"
+                            f", Experience: {dict_characters[clave]['experience']}")
+                id_value = input("ID to edit: ")
+                while not id_value.isdigit() or int(id_value) not in range(1,len(dict_characters)+1):
+                    print("Invalid Option".center(40, "="))
+                    input("Press enter to continue\n")
+                    id_value = input("ID to edit: ")
+                else:
+                    print(f"Select feature to edit to character ID: {id_value}, Name: {dict_characters[int(id_value)]['name']}\n"
+                          f"1)Name\n2)Weapon\n3)Go back")
+                    opc = input("->Option: ")
+                    while not opc.isdigit() or int(opc) not in (1, 2, 3):
+                        print("Invalid Option".center(40, "="))
+                        input("Press enter to continue\n")
+                        opc = input("->Option: ")
+                    else:
+                        opc = int(opc)
+                        if opc==1:
+                            value = input("Enter the new name: ")
+                            confirm = input(f"Do you want to change name {dict_characters[int(id_value)]['name']} by {value}? Y/N: ")
+                            confirm = confirm.upper()
+                            while not confirm in ("Y","N"):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                confirm = input(f"Do you want to change name {dict_characters[int(id_value)]['name']} by {value}? Y/N: ")
+                                confirm = confirm.upper()
+                            else:
+                                if confirm == "Y":
+                                    print(f"Name {dict_characters[int(id_value)]['name']} changed to {value}\n")
+                                    dict_characters[int(id_value)]['name'] = value
+                                else:
+                                    print(f"Name {dict_characters[int(id_value)]['name']} didn't change\n")
+                        elif opc==2:
+                            print("Pendiente de Mar")
+                        else:
+                            flg_menu_03 = False
+                            flg_menu_00 = True
 
             elif opc==2:
                 # sergio
                 print("Edit weapon")
+                print("Menu 032 (Select Weapon to Edit)".center(40, "=") + "\n")
+                for i in range(1, len(dict_weapons) + 1):
+                    print(f"{i}) {dict_weapons[i]['name']}, Strenght: {dict_weapons[i]['strength']}, Speed: {dict_weapons[i]['speed']}")
+                id_value = input("\nID weapon to edit: ")
+                while not id_value.isdigit() or int(id_value) not in range(1, len(dict_weapons) + 1):
+                    print("Invalid Option".center(40, "="))
+                    input("Press enter to continue\n")
+                    id_value = input("\nID weapon to edit: ")
+                else:
+                    print("\n" + "Menu 032X (Weapon feature to Edit)".center(40, "=") + "\n" +
+                    "1)Name\n2)Plus Strength\n3)Plus speed\n4)Go back\n")
+
+                    opc = input(f"Select feature to edit to weapon ID: {id_value}, Name: {dict_weapons[int(id_value)]['name']}\n"
+                                f"->Option: ")
+                    while not opc.isdigit() or int(opc) not in (1, 2, 3, 4):
+                        print("Invalid Option".center(40, "="))
+                        input("Press enter to continue\n")
+                        opc = input("\n->Option: ")
+                    else:
+                        opc = int(opc)
+                        if opc == 1:
+                            value = input("Enter the new name: ")
+                            confirm = input(f"Do you want to change name {dict_weapons[int(id_value)]['name']} by {value}? Y/N: ")
+                            confirm = confirm.upper()
+                            while not confirm in ("Y", "N"):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                confirm = input(f"Do you want to change name {dict_weapons[int(id_value)]['name']} by {value}? Y/N: ")
+                                confirm = confirm.upper()
+                            else:
+                                if confirm == "Y":
+                                    print(f"Name {dict_weapons[int(id_value)]['name']} changed to {value}\n")
+                                    dict_weapons[int(id_value)]['name'] = value
+                                else:
+                                    print(f"Name {dict_weapons[int(id_value)]['name']} didn't change\n")
+
+                        elif opc == 2:
+                            value = input("Enter the new Strength: ")
+                            value = int(value)
+                            while value not in range (1,10):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                value = input("Enter the new Strength: ")
+                                value = int(value)
+                            confirm = input(f"Do you want to change Strength from {dict_weapons[int(id_value)]['strength']} to {value} in the weapon {dict_weapons[int(id_value)]['name']}? Y/N: ")
+                            confirm = confirm.upper()
+                            while not confirm in ("Y", "N"):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                confirm = input(f"Do you want to change Strength from {dict_weapons[int(id_value)]['strength']} to {value} in the weapon {dict_weapons[int(id_value)]['name']}? Y/N")
+                                confirm = confirm.upper()
+                            else:
+                                if confirm == "Y":
+                                    print(f"Strength on {dict_weapons[int(id_value)]['name']} changed from {dict_weapons[int(id_value)]['strength']} to {value}\n")
+                                    dict_weapons[int(id_value)]['strength'] = int(value)
+                                else:
+                                    print(f"Strength on {dict_weapons[int(id_value)]['name']} didn't change\n")
+
+                        elif opc == 3:
+                            value = input("Enter the new Speed: ")
+                            value = int(value)
+                            while value not in range(1, 10):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                value = input("Enter the new Speed: ")
+                                value = int(value)
+                            confirm = input(f"Do you want to change Speed from {dict_weapons[int(id_value)]['speed']} to {value} in the weapon {dict_weapons[int(id_value)]['name']}? Y/N: ")
+                            confirm = confirm.upper()
+                            while not confirm in ("Y", "N"):
+                                print("Invalid Option".center(40, "="))
+                                input("Press enter to continue\n")
+                                confirm = input(f"Do you want to change Speed from {dict_weapons[int(id_value)]['speed']} to {value} in the weapon {dict_weapons[int(id_value)]['name']}? Y/N")
+                                confirm = confirm.upper()
+                            else:
+                                if confirm == "Y":
+                                    print(f"Speed on {dict_weapons[int(id_value)]['name']} changed from {dict_weapons[int(id_value)]['speed']} to {value}\n")
+                                    dict_weapons[int(id_value)]['speed'] = int(value)
+                                else:
+                                    print(f"Strength on {dict_weapons[int(id_value)]['name']} didn't change\n")
+                        else:
+                            flg_menu_03 = False
+                            flg_menu_00 = True
+
+
 
 
             else:
                 flg_menu_03 = False
                 flg_menu_00 = True
+
     while flg_menu_04:
         menu_04 = "Menu 04 (List)".center(40, "=") + "\n1)List characters\n2)List weapons\n3)List side\n4)List range\n5)Go back"
         print(menu_04)
