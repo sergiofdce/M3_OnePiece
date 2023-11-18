@@ -125,8 +125,9 @@ while exit==False:
                 flg_menu_00 = True
                 flg_menu_02 = False
 
+#\\\\\\\\\\\\\\MENU 021 CREATE CHARACTER
     while flg_menu_021:
-        menu_021= "Menu 02 New Character".center(40, "=")+"\n"
+        menu_021= "Menu 021 New Character".center(40, "=")+"\n"
         print(menu_021)
 
 #--------PICK NAME
@@ -260,6 +261,7 @@ while exit==False:
         new_ch_speed= random.randint(1,9)
         new_ch_experience=0
 
+#----------SAVE CHARACTER
         print()
         if len(new_ch_weapons)==0:
             print(f"The new player will be:\nName: {new_ch_name}\nCategory: {dict_categorys[new_ch_category]}\nWeapons: \nStrength: {new_ch_strength}\nSpeed: {new_ch_speed}\nExperience: {new_ch_experience}")
@@ -286,6 +288,73 @@ while exit==False:
         input("Press Enter to return to menu")
         flg_menu_00= True
         flg_menu_021= False
+
+
+
+# \\\\\\\\\\\\\\MENU 021 CREATE WEAPON
+    while flg_menu_022:
+        menu_022= "Menu 022 New Weapon".center(40, "=")+"\n"
+        print(menu_022)
+
+# --------PICK NAME
+        new_weapon_name = input("Name of the new weapon: ")
+
+# --------PICK STRENGTH
+        new_weapon_strength = input("Weapon Strength 1-9:\n->Strength: ")
+        while not new_weapon_strength.isdigit() or int(new_weapon_strength) not in range(1,10):
+            print("Invalid Option".center(40, "="))
+            input("Press enter to continue\n")
+            new_weapon_strength = input("Weapon Strength 1-9:\n->Strength: ")
+        else:
+            new_weapon_strength = int(new_weapon_strength)
+
+# --------PICK SPEED
+        new_weapon_speed = input("Weapon Speed 1-9:\n->Speed: ")
+        while not new_weapon_speed.isdigit() or int(new_weapon_speed) not in range(1,10):
+            print("Invalid Option".center(40, "="))
+            input("Press enter to continue\n")
+            new_weapon_speed = input("Weapon Speed 1-9:\n->Speed: ")
+        else:
+            new_weapon_speed = int(new_weapon_speed)
+
+# --------PICK KIND OF WEAPON
+        new_weapon_kind = input("Kind of Weapon:\n1)One Hand\n2)Two Hands\n->Option: ")
+        while not new_weapon_kind.isdigit() or int(new_weapon_kind) not in (1,2):
+            print("Invalid Option".center(40, "="))
+            input("Press enter to continue\n")
+            new_weapon_kind = input("Kind of Weapon:\n1)One Hand\n2)Two Hands\n->Option: ")
+        else:
+            new_weapon_kind = int(new_weapon_kind)
+
+            if new_weapon_kind==1:
+                new_weapon_kind=False
+            elif new_weapon_kind==2:
+                new_weapon_kind=True
+
+#------------SAVE WEAPON
+        print(f"The new weapon will be:\nName: {new_weapon_name}\nStrength: {new_weapon_strength}\nSpeed: {new_weapon_speed}\nTwo hands type: {new_weapon_kind}\n")
+
+        siono = input("Save this weapon? S/N ")
+        siono = siono.upper()
+        while not siono.isalpha() or not siono in ("S", "N"):
+            print("Invalid Option".center(40, "="))
+            siono = input("Save this weapon? S/N ")
+            siono = siono.upper()
+
+        if siono == ("S"):
+            numerolista = len(dict_weapons) + 1
+            dict_weapons[numerolista] = {"name" : new_weapon_name,"strength": new_weapon_strength,"speed": new_weapon_speed,"two_hand":new_weapon_kind}
+            #print(dict_weapons)
+            print("Weapon saved")
+        elif siono == ("N"):
+            print("Weapon discarded")
+
+        input("Press Enter to return to menu")
+        flg_menu_00 = True
+        flg_menu_022 = False
+
+
+
 
 
 
