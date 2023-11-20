@@ -380,13 +380,20 @@ while exit==False:
             if opc==1:
                 # sergio
                 print("Menu 031 (Select character to Edit)".center(40, "="))
+                # print(dict_characters)
                 for clave in dict_characters:
-                    if len(dict_characters[clave]['weapons']) == 1:
+                    if len(dict_characters[clave]['weapons']) == 0:
+                        print(f"ID: {clave}, Name: {dict_characters[clave]['name']}, Weapons: 0"
+                            f", Strenght: {dict_characters[clave]['strength']}"
+                            f", Speed: {dict_characters[clave]['speed']}"
+                            f", Experience: {dict_characters[clave]['experience']}")
+
+                    elif len(dict_characters[clave]['weapons']) == 1:
                         print(f"ID: {clave}, Name: {dict_characters[clave]['name']}, Weapons: {dict_weapons[dict_characters[clave]['weapons'][0]]['name']}"
                             f", Strenght: {dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}"
                             f", Speed: {dict_characters[clave]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed']}"
                             f", Experience: {dict_characters[clave]['experience']}")
-                    else:
+                    elif len(dict_characters[clave]['weapons']) == 2:
                         print(f"ID: {clave}, Name: {dict_characters[clave]['name']}, Weapons: {dict_weapons[dict_characters[clave]['weapons'][0]]['name']}, {dict_weapons[dict_characters[clave]['weapons'][1]]['name']}"
                             f", Strenght: {dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}"
                             f", Speed: {dict_characters[clave]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed'] + dict_weapons[dict_characters[clave]['weapons'][0]]['speed']}"
@@ -661,7 +668,15 @@ while exit==False:
                     10) + "\n" + "*" * 60)
 
                 for clave in dict_characters:
-                    if len(dict_characters[clave]['weapons']) == 1:
+                    if len(dict_characters[clave]['weapons']) == 0:
+                        print(f"{clave}".ljust(10)
+                              + f"{dict_characters[clave]['name']}".ljust(17)
+                              + f"{dict_characters[clave]['strength']}".rjust(8) + " "*5
+                              + f"{dict_characters[clave]['speed']}".rjust(5) + " "*5
+                              + str(dict_characters[clave]['experience']).ljust(10)
+                              )
+
+                    elif len(dict_characters[clave]['weapons']) == 1:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}".rjust(8) + " "*5
@@ -669,7 +684,7 @@ while exit==False:
                               + str(dict_characters[clave]['experience']).ljust(10)
                               )
 
-                    else:
+                    elif len(dict_characters[clave]['weapons']) == 2:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}".rjust(8) + " " * 5
@@ -690,7 +705,15 @@ while exit==False:
                             claves_characters[j + 1] = aux
 
                 for clave in claves_characters:
-                    if len(dict_characters[clave]['weapons']) == 1:
+                    if len(dict_characters[clave]['weapons']) == 0:
+                        print(f"{clave}".ljust(10)
+                              + f"{dict_characters[clave]['name']}".ljust(17)
+                              + f"{dict_characters[clave]['strength']}".rjust(8) + " "*5
+                              + f"{dict_characters[clave]['speed']}".rjust(5) + " "*5
+                              + str(dict_characters[clave]['experience']).ljust(10)
+                              )
+
+                    elif len(dict_characters[clave]['weapons']) == 1:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}".rjust(8) + " "*5
@@ -698,7 +721,7 @@ while exit==False:
                               + str(dict_characters[clave]['experience']).ljust(10)
                               )
 
-                    else:
+                    elif len(dict_characters[clave]['weapons']) == 2:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}".rjust(8) + " " * 5
@@ -706,23 +729,58 @@ while exit==False:
                               + str(dict_characters[clave]['experience']).ljust(10)
                               )
 
-
 # -----------LIST CHARACTERS BY STRENGTH
             elif opc == 3:
                 print("Characters ordered by Strength".center(60, "=") + "\n" + "Id".ljust(10) + "Name".ljust(17) + "Strength".rjust(8) + " " * 5 + "Speed".rjust(5) + " " * 5 + "Experience".ljust(10) + "\n" + "*" * 60)
-                sum1 = 0
-                sum2 = 0
                 claves_characters = list(dict_characters.keys())
                 for pasada in range(len(claves_characters) - 1):
                     for j in range(len(claves_characters) - 1 - pasada):
-                        if dict_characters[claves_characters[j]]["strength"] > dict_characters[claves_characters[j + 1]]["strength"]:
+                        # suma_p1 es la suma total de su pj
+                        # print(f"personaje : {dict_characters[claves_characters[j]]['name']}")
+                        suma_p1 = 0
+                        claves_wp = list(dict_weapons.keys())
+                        # Por longitud de mi lista de armas
+                        for i in range(len(dict_characters[claves_characters[j]]['weapons'])):
+                            # Comprobamos arma en diccionario de armas
+                            for arma in range(len(dict_weapons)):
+                                # print(f"id : {claves_wp[arma]}")
+                                # print(f"nombre : {dict_weapons[claves_wp[arma]]['name']}")
+                                if dict_characters[claves_characters[j]]['weapons'][i] == claves_wp[arma]:
+                                    suma_p1 += dict_weapons[claves_wp[arma]]['strength']
+                        suma_p1 += dict_characters[claves_characters[j]]['strength']
+                        # print(f"suma daño : {suma_p1}")
+
+                        # suma_p2 es la suma total de su pj
+                        # print(f"personaje : {dict_characters[claves_characters[j+1]]['name']}")
+                        suma_p2 = 0
+                        claves_wp = list(dict_weapons.keys())
+                        # Por longitud de mi lista de armas
+                        for i in range(len(dict_characters[claves_characters[j+1]]['weapons'])):
+                            # Comprobamos arma en diccionario de armas
+                            for arma in range(len(dict_weapons)):
+                                # print(f"id : {claves_wp[arma]}")
+                                # print(f"nombre : {dict_weapons[claves_wp[arma]]['name']}")
+                                if dict_characters[claves_characters[j+1]]['weapons'][i] == claves_wp[arma]:
+                                    suma_p2 += dict_weapons[claves_wp[arma]]['strength']
+                        suma_p2 += dict_characters[claves_characters[j+1]]['strength']
+                        # print(f"suma daño : {suma_p2}")
+
+                        if suma_p1 > suma_p2:
                             aux = claves_characters[j]
                             claves_characters[j] = claves_characters[j + 1]
                             claves_characters[j + 1] = aux
 
 
                 for clave in claves_characters:
-                    if len(dict_characters[clave]['weapons']) == 1:
+                    if len(dict_characters[clave]['weapons']) == 0:
+                        print(f"{clave}".ljust(10)
+                              + f"{dict_characters[clave]['name']}".ljust(17)
+                              + f"{dict_characters[clave]['strength']}".rjust(8) + " "*5
+                              + f"{dict_characters[clave]['speed']}".rjust(5) + " "*5
+                              + str(dict_characters[clave]['experience']).ljust(10)
+                              )
+
+                    elif len(dict_characters[clave]['weapons']) == 1:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}".rjust(8) + " "*5
@@ -730,7 +788,7 @@ while exit==False:
                               + str(dict_characters[clave]['experience']).ljust(10)
                               )
 
-                    else:
+                    elif len(dict_characters[clave]['weapons']) == 2:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}".rjust(8) + " " * 5
@@ -747,13 +805,51 @@ while exit==False:
                 claves_characters = list(dict_characters.keys())
                 for pasada in range(len(claves_characters) - 1):
                     for j in range(len(claves_characters) - 1 - pasada):
-                        if dict_characters[claves_characters[j]]["speed"] > dict_characters[claves_characters[j + 1]]["speed"]:
+                        # suma_p1 es la suma total de su pj
+                        # print(f"personaje : {dict_characters[claves_characters[j]]['name']}")
+                        suma_p1 = 0
+                        claves_wp = list(dict_weapons.keys())
+                        # Por longitud de mi lista de armas
+                        for i in range(len(dict_characters[claves_characters[j]]['weapons'])):
+                            # Comprobamos arma en diccionario de armas
+                            for arma in range(len(dict_weapons)):
+                                # print(f"id : {claves_wp[arma]}")
+                                # print(f"nombre : {dict_weapons[claves_wp[arma]]['name']}")
+                                if dict_characters[claves_characters[j]]['weapons'][i] == claves_wp[arma]:
+                                    suma_p1 += dict_weapons[claves_wp[arma]]['speed']
+                        suma_p1 += dict_characters[claves_characters[j]]['speed']
+                        # print(f"suma daño : {suma_p1}")
+
+                        # suma_p2 es la suma total de su pj
+                        # print(f"personaje : {dict_characters[claves_characters[j+1]]['name']}")
+                        suma_p2 = 0
+                        claves_wp = list(dict_weapons.keys())
+                        # Por longitud de mi lista de armas
+                        for i in range(len(dict_characters[claves_characters[j + 1]]['weapons'])):
+                            # Comprobamos arma en diccionario de armas
+                            for arma in range(len(dict_weapons)):
+                                # print(f"id : {claves_wp[arma]}")
+                                # print(f"nombre : {dict_weapons[claves_wp[arma]]['name']}")
+                                if dict_characters[claves_characters[j + 1]]['weapons'][i] == claves_wp[arma]:
+                                    suma_p2 += dict_weapons[claves_wp[arma]]['speed']
+                        suma_p2 += dict_characters[claves_characters[j + 1]]['speed']
+                        # print(f"suma daño : {suma_p2}")
+
+                        if suma_p1 > suma_p2:
                             aux = claves_characters[j]
                             claves_characters[j] = claves_characters[j + 1]
                             claves_characters[j + 1] = aux
 
                 for clave in claves_characters:
-                    if len(dict_characters[clave]['weapons']) == 1:
+                    if len(dict_characters[clave]['weapons']) == 0:
+                        print(f"{clave}".ljust(10)
+                              + f"{dict_characters[clave]['name']}".ljust(17)
+                              + f"{dict_characters[clave]['strength']}".rjust(8) + " "*5
+                              + f"{dict_characters[clave]['speed']}".rjust(5) + " "*5
+                              + str(dict_characters[clave]['experience']).ljust(10)
+                              )
+
+                    elif len(dict_characters[clave]['weapons']) == 1:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength']}".rjust(8) + " "*5
@@ -761,7 +857,7 @@ while exit==False:
                               + str(dict_characters[clave]['experience']).ljust(10)
                               )
 
-                    else:
+                    elif len(dict_characters[clave]['weapons']) == 2:
                         print(f"{clave}".ljust(10)
                               + f"{dict_characters[clave]['name']}".ljust(17)
                               + f"{dict_characters[clave]['strength'] + dict_weapons[dict_characters[clave]['weapons'][0]]['strength'] + + dict_weapons[dict_characters[clave]['weapons'][1]]['strength']}".rjust(8) + " " * 5
@@ -875,18 +971,36 @@ while exit==False:
 
         datos1 = ""
         datos2 = ""
-
         for clave in claves_characters:
+            strength = 0
+            claves_wp = list(dict_weapons.keys())
+            for i in range(len(dict_characters[clave]['weapons'])):
+                for arma in range(len(dict_weapons)):
+                    if dict_characters[clave]['weapons'][i] == claves_wp[arma]:
+                        strength += dict_weapons[claves_wp[arma]]['strength']
+            strength += dict_characters[clave]['strength']
+
+            speed = 0
+            claves_wp = list(dict_weapons.keys())
+            for i in range(len(dict_characters[clave]['weapons'])):
+                for arma in range(len(dict_weapons)):
+                    if dict_characters[clave]['weapons'][i] == claves_wp[arma]:
+                        speed += dict_weapons[claves_wp[arma]]['speed']
+            speed += dict_characters[clave]['speed']
+
+
+
+
             if dict_characters[clave]["category"] > 5:
                 datos1 += (str(clave).ljust(10) + dict_characters[clave]['name'].ljust(17)
-                           + str(dict_characters[clave]['strength']).rjust(8) + " " * 5
-                           + str(dict_characters[clave]['speed']).rjust(5) + " " * 5
+                           + str(strength).rjust(8) + " " * 5
+                           + str(speed).rjust(5) + " " * 5
                            + str(dict_characters[clave]['experience']).rjust(10)
                            + "Marine".rjust(20)) + "\n"
             else:
                 datos2 += (str(clave).ljust(10) + dict_characters[clave]['name'].ljust(17)
-                           + str(dict_characters[clave]['strength']).rjust(8) + " " * 5
-                           + str(dict_characters[clave]['speed']).rjust(5) + " " * 5
+                           + str(strength).rjust(8) + " " * 5
+                           + str(speed).rjust(5) + " " * 5
                            + str(dict_characters[clave]['experience']).rjust(10)
                            + "Pirate".rjust(20)) + "\n"
 
@@ -911,8 +1025,23 @@ while exit==False:
                     claves_characters[j + 1] = aux
 
         for clave in claves_characters:
-            print(str(clave).ljust(10) + dict_characters[clave]['name'].ljust(17) + str(
-                dict_characters[clave]['strength']).rjust(8) + " " * 5 + str(dict_characters[clave]['speed']).rjust(
+            strength = 0
+            claves_wp = list(dict_weapons.keys())
+            for i in range(len(dict_characters[clave]['weapons'])):
+                for arma in range(len(dict_weapons)):
+                    if dict_characters[clave]['weapons'][i] == claves_wp[arma]:
+                        strength += dict_weapons[claves_wp[arma]]['strength']
+            strength += dict_characters[clave]['strength']
+
+            speed = 0
+            claves_wp = list(dict_weapons.keys())
+            for i in range(len(dict_characters[clave]['weapons'])):
+                for arma in range(len(dict_weapons)):
+                    if dict_characters[clave]['weapons'][i] == claves_wp[arma]:
+                        speed += dict_weapons[claves_wp[arma]]['speed']
+            speed += dict_characters[clave]['speed']
+
+            print(str(clave).ljust(10) + dict_characters[clave]['name'].ljust(17) + str(strength).rjust(8) + " " * 5 + str(speed).rjust(
                 5) + " " * 5 + str(dict_characters[clave]['experience']).rjust(10) + dict_categorys[
                       dict_characters[clave]['category']].rjust(20))
 
